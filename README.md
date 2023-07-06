@@ -2,6 +2,7 @@
 Packet_sniffer_C v2.0 comes out at 'WireSniff)
 # Descrption:
 Updated version of `https://github.com/Arjun4522/Packet_sniffer_C`
+### Getting Started:
 1. Install libpcap for Debian-based distributions using `sudo apt update && sudo apt-get install libpcap-dev`
 3. Clone the repository: `https://github.com/Arjun4522/WireSniff`
 4. Navigate to the project directory: `cd WireSniff`
