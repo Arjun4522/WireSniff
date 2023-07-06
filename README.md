@@ -2,6 +2,12 @@
 'Packet_sniffer_C v2' comes out at 'WireSniff'
 # Descrption:
 Updated version of `https://github.com/Arjun4522/Packet_sniffer_C`
+### Added Features:
+1. Source IP
+2. Source Port
+3. Destination IP
+4. Destination Port
+5. Timestamp
 ### Getting Started:
 1. Install libpcap for Debian-based distributions using `sudo apt update && sudo apt-get install libpcap-dev`
 3. Clone the repository: `https://github.com/Arjun4522/WireSniff`
