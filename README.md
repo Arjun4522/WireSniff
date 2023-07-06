@@ -1,5 +1,5 @@
 # WireSniff
-Packet_sniffer_C v2.0 comes out at 'WireSniff)
+Packet_sniffer_C v2 comes out at 'WireSniff'
 # Descrption:
 Updated version of `https://github.com/Arjun4522/Packet_sniffer_C`
 ### Getting Started:
