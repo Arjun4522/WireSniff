@@ -8,6 +8,8 @@
 #include <netinet/if_ether.h>
 #include <netinet/ip.h>
 #include <netinet/tcp.h>
+#include <netinet/udp.h>
+#include <netinet/ip_icmp.h>
 #include <ctype.h>
 #include <string.h>
 #include <time.h>
@@ -40,6 +42,8 @@ void g(u_char *args, const struct pcap_pkthdr* ph, const u_char* pkt) {
     ep = (struct ether_header*) pkt;
     struct ip* iph = (struct ip*)(pkt + sizeof(struct ether_header));
     struct tcphdr* tcph = (struct tcphdr*)(pkt + sizeof(struct ether_header) + iph->ip_hl * 4);
+    struct udphdr* udph = (struct udphdr*)(pkt + sizeof(struct ether_header) + iph->ip_hl * 4);
+    struct icmphdr* icmph = (struct icmphdr*)(pkt + sizeof(struct ether_header) + iph->ip_hl * 4);
 
     a.s_addr = m;
     strncpy(ip, A1(a), INET_ADDRSTRLEN);
@@ -50,14 +54,29 @@ void g(u_char *args, const struct pcap_pkthdr* ph, const u_char* pkt) {
     printf("Interface: %s\n", d);
     printf("Network IP address: %s\n", s);
     printf("Source IP: %s\n", inet_ntoa(iph->ip_dst));
-    printf("Source Port: %d\n", ntohs(tcph->th_sport));
+    printf("Source Port: %d\n", ntohs(tcph->th_dport));
     printf("Destination IP: %s\n", inet_ntoa(iph->ip_src));
-    printf("Destination Port: %d\n", ntohs(tcph->th_dport));
+    printf("Destination Port: %d\n", ntohs(tcph->th_sport));
     printf("Subnet mask: %s\n", ip);
     printf("Timestamp: %s\n", timestr);
-    //printf("\n");
     printf("Packet Count: %d\n", ++count);
     printf("Received Packet Size: %d\n", ph->len);
+
+    switch (iph->ip_p) {
+        case IPPROTO_TCP:
+            printf("Protocol: TCP\n");
+            break;
+        case IPPROTO_UDP:
+            printf("Protocol: UDP\n");
+            break;
+        case IPPROTO_ICMP:
+            printf("Protocol: ICMP\n");
+            break;
+        default:
+            printf("Protocol: Unknown\n");
+            break;
+    }
+
     printf("Payload:\n");
 
     for (i = 0; i < ph->len; i++) {
@@ -102,3 +121,4 @@ int main(int argc, char** argv) {
 
     return 0;
 }
+
